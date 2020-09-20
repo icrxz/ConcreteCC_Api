@@ -3,8 +3,11 @@
 # dependencies
 node_modules
 
-# Env Vars
+# env Vars
 .env
+
+# editor configs
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
