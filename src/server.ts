@@ -24,5 +24,3 @@ app.use('/api/v1', routes);
 connect();
 
 app.listen(4000);
-
-module.exports = {};
