@@ -4,9 +4,7 @@ let mongoDB = mongoose.connection;
 mongoose.Promise = global.Promise;
 
 export const connect = () => {
-  const url = `mongodb://db:27017/concrete-api-docker`;
-
-  mongoose.connect(process.env.MONGODB_URL || url, { useUnifiedTopology: true,useNewUrlParser: true });
+  mongoose.connect(process.env.MONGODB_URL || '', { useUnifiedTopology: true,useNewUrlParser: true });
 
   mongoDB = mongoose.connection;
 
