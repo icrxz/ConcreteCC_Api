@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  concrete_api:
+    container_name: concrete_api
+    build: .
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - '4000:4000'
+    tty: true
+
+  db:
+    container_name: mongodb_development
+    image: 'mongo'
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
