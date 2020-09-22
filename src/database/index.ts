@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
 let mongoDB = mongoose.connection;
+mongoose.Promise = global.Promise;
 
 export const connect = () => {
   const url = `mongodb+srv://admin_modular:KyRD58nkH1jAAiPX@node-concrete.ufzt3.mongodb.net/concrete_dev?retryWrites=true&w=majority`;
 
-  console.log(mongoDB);
-
-  mongoose.connect(process.env.MONGODB_URL || url, { useUnifiedTopology: true });
+  mongoose.connect(process.env.MONGODB_URL || url, { useUnifiedTopology: true,useNewUrlParser: true });
 
   mongoDB = mongoose.connection;
 
