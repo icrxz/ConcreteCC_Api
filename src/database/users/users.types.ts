@@ -1,29 +1,17 @@
-import { Document, Model } from "mongoose";
+import { Document } from "mongoose";
 
 export interface IUser {
-  firstName: string;
-  lastName: string;
+  name: string;
+  password: string;
   email: string;
-  cpf: string;
-  birthDate: Date;
+  role: string;
+  profile: string;
+  phone?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  lastModifiedById?: string;
 }
 
 export interface IUserDocument extends IUser, Document {
   setLastUpdated: (user: IUserDocument) => Promise<void>;
-  sameLastName: (user: IUserDocument) => Promise<Document[]>;
-}
-
-export interface IUserModel extends Model<IUserDocument> {
-  findOneOrCreate: (
-    this: IUserModel,
-    {
-      firstName,
-      lastName,
-      birthDate,
-      email,
-      cpf,
-    }: { firstName: string; lastName: string; birthDate: Date, email: string, cpf: string }
-  ) => Promise<IUserDocument>;
 }

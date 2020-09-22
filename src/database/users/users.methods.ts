@@ -1,18 +1,4 @@
-import { Document } from "mongoose";
-import { IUserDocument, IUserModel } from "./users.types";
-
-export async function findOneOrCreate(
-  user: IUserModel,
-  userId: string
-): Promise<IUserDocument> {
-  const record = await user.findOne({ userId });
-
-  if (record) {
-    return record;
-  } else {
-    return user.create();
-  }
-}
+import { IUserDocument } from "./users.types";
 
 export async function setUpdatedAt(user: IUserDocument): Promise<void> {
   const now = new Date();
@@ -23,6 +9,3 @@ export async function setUpdatedAt(user: IUserDocument): Promise<void> {
   }
 }
 
-export async function sameLastName(user: IUserDocument): Promise<Document[]> {
-  return user.model("user").find({ lastName: user.lastName });
-}
