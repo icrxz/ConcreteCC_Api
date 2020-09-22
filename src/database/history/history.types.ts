@@ -12,4 +12,6 @@ export interface IUser {
   lastModifiedById?: string;
 }
 
-export interface IUserDocument extends IUser, Document {};
+export interface IUserDocument extends IUser, Document {
+  setLastUpdated: (user: IUserDocument) => Promise<void>;
+}
