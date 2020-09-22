@@ -4,7 +4,6 @@ let mongoDB = mongoose.connection;
 mongoose.Promise = global.Promise;
 
 export const connect = () => {
-  console.log(process.env.MONGODB_URL);
   mongoose.connect(process.env.MONGODB_URL || '', { useUnifiedTopology: true,useNewUrlParser: true });
 
   mongoDB = mongoose.connection;
