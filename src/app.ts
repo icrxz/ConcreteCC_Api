@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
-import routes from './routes';
+import * as routes from './router';
 import { connect } from "./database";
 
 require('dotenv').config();
@@ -34,7 +34,11 @@ class App {
   }
 
   private routes() {
-    this.express.use('/api/v1', routes);
+    this.express.use('/api/v1', [
+      routes.authRouter,
+      routes.userRouter,
+      routes.projectRouter,
+    ]);
   }
 }
 
