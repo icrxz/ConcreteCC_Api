@@ -12,10 +12,24 @@ const OrganizationSchema = new Schema({
     default: true,
   },
   description: String,
-  createdById: String,
-  lastModifiedById: String
+  manager: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  projects:[{
+    type: Schema.Types.ObjectId,
+    ref: "project",
+  }],
+  createdById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  lastModifiedById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  }
 }, {
   timestamps: true,
 });
 
-export const OrganizationModel = model("organization", OrganizationSchema);
+export const OrganizationModel = model<IOrganizationDocument>("organization", OrganizationSchema);

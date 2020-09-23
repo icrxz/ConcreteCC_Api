@@ -11,13 +11,27 @@ const ProjectSchema = new Schema({
     required: true,
     default: true,
   },
+  organization: {
+    type: Schema.Types.ObjectId,
+    ref: "organization",
+  },
   files: [{
     type: Schema.Types.ObjectId,
     ref: "file"
   }],
   description: String,
-  createdById: String,
-  lastModifiedById: String
+  manager: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  createdById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  lastModifiedById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  }
 }, {
   timestamps: true,
 });

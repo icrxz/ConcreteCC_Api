@@ -19,9 +19,19 @@ const FileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "project",
   },
+  fileHistory: [{
+    type: Schema.Types.ObjectId,
+    ref: "history",
+  }],
   description: String,
-  createdById: String,
-  lastModifiedById: String
+  createdById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  lastModifiedById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  }
 }, {
   timestamps: true,
 });

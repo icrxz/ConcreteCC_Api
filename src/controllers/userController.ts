@@ -2,6 +2,11 @@ import { Request, Response } from 'express';
 import Bcrypt from 'bcrypt';
 
 import { UserModel }  from '../database/users/users.schema'
+import { S3 } from 'aws-sdk';
+
+const s3 = new S3({
+  
+})
 
 export const createUser = async (req: Request, res: Response) => {
   try {
