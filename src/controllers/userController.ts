@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import Bcrypt from 'bcrypt';
 
-import { UserModel }  from '../database/users/users.schema'
+import { UserModel }  from '../models/users/users.schema'
 import { S3 } from 'aws-sdk';
 
 const s3 = new S3({
-  
+
 })
 
 export const createUser = async (req: Request, res: Response) => {
@@ -32,7 +32,27 @@ export const indexUser = async (req: Request, res: Response) => {
 
 export const showUser = async (req: Request, res: Response, userId: string) => {
   try {
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).orFail(Error);
+
+    return res.json(user)
+  } catch (error) {
+    return res.status(404).json({ error: 'User not found' })
+  }
+};
+
+export const changePassword = async (req: Request, res: Response, userId: string) => {
+  try {
+    const { lastPassword, newPassword, confirmationPassword } = req.body;
+    const user = await UserModel.findById(userId).orFail(Error);
+
+    if (
+      Bcrypt.compareSync(lastPassword, user.password) &&
+      newPassword === confirmationPassword
+      ) {
+
+        user.password = Bcrypt.hashSync(newPassword, 10);
+        user.save();
+    }
 
     return res.json(user)
   } catch (error) {

@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { S3 } from 'aws-sdk';
 
-import { ProjectModel }  from '../database/projects/projects.schema';
-import { FileModel }  from '../database/files/files.schema';
+import { ProjectModel }  from '../models/projects/projects.schema';
+import { FileModel }  from '../models/files/files.schema';
 
 export const createProject = async (req: Request, res: Response) => {
   try {
@@ -26,7 +25,7 @@ export const indexProject = async (req: Request, res: Response) => {
 
 export const showProject = async (req: Request, res: Response, projectId: string) => {
   try {
-    const project = await ProjectModel.findById(projectId);
+    const project = await ProjectModel.findById(projectId).orFail(Error);
 
     return res.json(project)
   } catch (error) {
@@ -36,11 +35,10 @@ export const showProject = async (req: Request, res: Response, projectId: string
 
 export const deleteProject = async (req: Request, res: Response, projectId: string) => {
   try {
-    const project = await ProjectModel.findById(projectId);
-
-    if (!project) throw ('Project not found');
+    const project = await ProjectModel.findById(projectId).orFail(Error);
 
     project.isActive = false;
+    project.save();
 
     return res.json(project)
   } catch (error) {
