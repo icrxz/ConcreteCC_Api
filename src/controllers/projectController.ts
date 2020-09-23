@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { S3 } from 'aws-sdk';
 
 import { ProjectModel }  from '../database/projects/projects.schema';
+import { FileModel }  from '../database/files/files.schema';
 
 export const createProject = async (req: Request, res: Response) => {
   try {
@@ -47,6 +48,7 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
   }
 };
 
-export const uploadFile = async (re: Request, res: Response, projectId: string) => {
-
+export const uploadFile = async (req: Request, resp: Response, projectId: string) => {
+  const createdFile = { ...req.file };
+  console.log(createdFile);
 }
