@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface IUser {
+export interface IHistory {
   name: string;
   password: string;
   email: string;
@@ -12,6 +12,4 @@ export interface IUser {
   lastModifiedById?: string;
 }
 
-export interface IUserDocument extends IUser, Document {
-  setLastUpdated: (user: IUserDocument) => Promise<void>;
-}
+export interface IHistoryDocument extends IHistory, Document {}

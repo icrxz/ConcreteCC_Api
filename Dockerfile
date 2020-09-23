@@ -10,5 +10,3 @@ RUN yarn install --quiet
 COPY . .
 
 EXPOSE 4000
-
-CMD ["yarn", "start"]

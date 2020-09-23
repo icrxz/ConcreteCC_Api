@@ -1,6 +1,7 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+import { IHistoryDocument } from './history.types';
 
-const UserSchema = new Schema({
+const HistorySchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -30,4 +31,4 @@ const UserSchema = new Schema({
   timestamps: true,
 });
 
-export default UserSchema;
+export const HistoryModel = model<IHistoryDocument>("history", HistorySchema);

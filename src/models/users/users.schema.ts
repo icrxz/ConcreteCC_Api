@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+import { IUserDocument } from './users.types';
 
 const UserSchema = new Schema({
   name: {
@@ -30,4 +31,4 @@ const UserSchema = new Schema({
   timestamps: true,
 });
 
-export default UserSchema;
+export const UserModel = model<IUserDocument>("user", UserSchema);
