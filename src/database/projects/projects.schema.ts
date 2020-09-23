@@ -1,6 +1,7 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+import { IProjectDocument } from './projects.types';
 
-const UserSchema = new Schema({
+const ProjectSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -10,6 +11,10 @@ const UserSchema = new Schema({
     required: true,
     default: true,
   },
+  files: [{
+    type: Schema.Types.ObjectId,
+    ref: "file"
+  }],
   description: String,
   createdById: String,
   lastModifiedById: String
@@ -17,4 +22,4 @@ const UserSchema = new Schema({
   timestamps: true,
 });
 
-export default UserSchema;
+export const ProjectModel = model<IProjectDocument>("project", ProjectSchema);

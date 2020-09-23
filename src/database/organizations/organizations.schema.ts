@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+import { IOrganizationDocument } from './organizations.types';
 
 const OrganizationSchema = new Schema({
   name: {
@@ -17,4 +18,4 @@ const OrganizationSchema = new Schema({
   timestamps: true,
 });
 
-export default OrganizationSchema;
+export const OrganizationModel = model("organization", OrganizationSchema);

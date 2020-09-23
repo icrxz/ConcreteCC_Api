@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
+import { IFileDocument } from './files.types';
 
 const FileSchema = new Schema({
   name: {
@@ -14,6 +15,10 @@ const FileSchema = new Schema({
     type: String,
     required: true,
   },
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "project",
+  },
   description: String,
   createdById: String,
   lastModifiedById: String
@@ -21,4 +26,4 @@ const FileSchema = new Schema({
   timestamps: true,
 });
 
-export default FileSchema;
+export const FileModel = model<IFileDocument>("file", FileSchema);

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Bcrypt from 'bcrypt';
 
-import { UserModel }  from '../database/users/users.model'
+import { UserModel }  from '../database/users/users.schema'
 
 export const createUser = async (req: Request, res: Response) => {
   try {
