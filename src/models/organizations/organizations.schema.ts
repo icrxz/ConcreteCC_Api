@@ -4,21 +4,24 @@ import { IOrganizationDocument } from './organizations.types';
 const OrganizationSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   isActive: {
     type: Boolean,
     required: true,
-    default: true,
+    default: true
   },
-  description: String,
-  manager: {
+  description: {
+    type: String,
+    required: false
+  },
+    manager: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: "user"
   },
   projects:[{
     type: Schema.Types.ObjectId,
-    ref: "project",
+    ref: "project"
   }],
   createdById: {
     type: Schema.Types.ObjectId,
