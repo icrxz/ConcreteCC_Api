@@ -28,10 +28,4 @@ userRouter.put(
   (req, resp) => userController.changePassword(req, resp, req.params.userId)
 );
 
-userRouter.delete(
-  '/users/:userId',
-  authMiddleware,
-  (req, resp) => userController.deleteUser(req, resp, req.params.userId)
-);
-
 export default userRouter;

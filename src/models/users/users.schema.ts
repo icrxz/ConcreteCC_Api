@@ -4,31 +4,43 @@ import { IUserDocument } from './users.types';
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
+  },
+  role: {
+    type: String,
+    required: true
   },
   email: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
   profile: {
     type: String,
     required: true
   },
-  phone: String,
-  role: {
+  phone: {
     type: String,
-    required: true
+    required: false
+  },
+  projectUsers: [{
+    type: Schema.Types.ObjectId,
+    ref: "user"
+  }],
+  createdById: {
+    type: String,
+    required: false
   },
   lastModifiedById: {
-    type: String
+    type: String,
+    required: false
   }
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 export const UserModel = model<IUserDocument>("user", UserSchema);

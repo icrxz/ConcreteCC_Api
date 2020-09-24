@@ -5,12 +5,14 @@ import { OrganizationModel }  from '../models/organizations/organizations.schema
 
 export const createOrganization = async (req: Request, res: Response) => {
   try {
+
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
 
-    req.body.createdById = userId;
-
     const organization = await OrganizationModel.create(req.body);
+
+    organization.createdById = userId;
+    organization.save();
 
     return res.json(organization)
   } catch (error) {
@@ -42,10 +44,11 @@ export const deleteOrganization = async (req: Request, res: Response, organizati
   try {
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
+
     const organization = await OrganizationModel.findById(organizationId).orFail(Error);
 
-    organization.isActive = false;
     organization.lastModifiedById = userId;
+    organization.isActive = false;
     organization.save();
 
     return res.json(organization)

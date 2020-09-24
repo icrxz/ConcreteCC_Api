@@ -3,6 +3,8 @@ import Bcrypt from 'bcrypt';
 
 import { UserModel }  from '../models/users/users.schema'
 import { S3 } from 'aws-sdk';
+import * as jwt from '../utils/jwt';
+
 
 const s3 = new S3({
 
@@ -10,6 +12,7 @@ const s3 = new S3({
 
 export const createUser = async (req: Request, res: Response) => {
   try {
+
     req.body.password = Bcrypt.hashSync(req.body.password, 10);
 
     const user = await UserModel.create(req.body);
@@ -42,6 +45,10 @@ export const showUser = async (req: Request, res: Response, userId: string) => {
 
 export const changePassword = async (req: Request, res: Response, userId: string) => {
   try {
+
+    const token = req.headers['auth'] as string;
+    const { userId } = jwt.verify(token) as any;
+
     const { lastPassword, newPassword, confirmationPassword } = req.body;
     const user = await UserModel.findById(userId).orFail(Error);
 
@@ -51,21 +58,9 @@ export const changePassword = async (req: Request, res: Response, userId: string
       ) {
 
         user.password = Bcrypt.hashSync(newPassword, 10);
+        user.lastModifiedById = userId;
         user.save();
     }
-
-    return res.json(user)
-  } catch (error) {
-    return res.status(404).json({ error: 'User not found' })
-  }
-};
-
-export const deleteUser = async (req: Request, res: Response, userId: string) => {
-  try {
-    const user = await UserModel.findById(userId).orFail(Error);
-
-    user.isActive = false;
-    user.save();
 
     return res.json(user)
   } catch (error) {
