@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "tsc --optimize_for_size  --max_old_space_size=490",
+    "build": "tsc",
     "dev": "nodemon src/server.ts",
     "dev:debug": "nodemon --inspect src/server.ts",
-    "start": "ts-node src/server.ts --optimize_for_size  --max_old_space_size=490",
+    "start": "ts-node src/server.ts --max_old_space_size=460",
     "lint": "eslint . --ext .ts --ext .tsx"
   },
   "devDependencies": {
