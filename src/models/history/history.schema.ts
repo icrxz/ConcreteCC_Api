@@ -31,7 +31,7 @@ const HistorySchema = new Schema({
     required: true
   }
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 export const HistoryModel = model<IHistoryDocument>("history", HistorySchema);

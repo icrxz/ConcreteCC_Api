@@ -6,10 +6,10 @@ export interface IHistory {
   externalURL: string;
   versionNumber: number;
   isActive: boolean;
-  createdAt?: Date;
-  createdById?: string;
-  lastModifiedAt?: Date;
-  lastModifiedById?: string;
+  createdAt: Date;
+  createdById: string;
+  lastModifiedAt: Date;
+  lastModifiedById: string;
 }
 
 export interface IHistoryDocument extends IHistory, Document {}
