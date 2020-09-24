@@ -48,5 +48,5 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
 
 export const uploadFile = async (req: Request, resp: Response, projectId: string) => {
   const createdFile = { ...req.file };
-  console.log(createdFile);
+  console.log('Teste'+createdFile);
 }
