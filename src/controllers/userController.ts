@@ -4,12 +4,15 @@ import Bcrypt from 'bcrypt';
 import { UserModel }  from '../models/users/users.schema'
 import { S3 } from 'aws-sdk';
 
+import * as utils from '../utils/utils';
+
 const s3 = new S3({
 
 })
 
 export const createUser = async (req: Request, res: Response) => {
   try {
+    utils.fillCreatedBy(req);
     req.body.password = Bcrypt.hashSync(req.body.password, 10);
 
     const user = await UserModel.create(req.body);
@@ -42,6 +45,9 @@ export const showUser = async (req: Request, res: Response, userId: string) => {
 
 export const changePassword = async (req: Request, res: Response, userId: string) => {
   try {
+    
+    utils.fillLastModifiedBy(req);
+
     const { lastPassword, newPassword, confirmationPassword } = req.body;
     const user = await UserModel.findById(userId).orFail(Error);
 
@@ -62,6 +68,9 @@ export const changePassword = async (req: Request, res: Response, userId: string
 
 export const deleteUser = async (req: Request, res: Response, userId: string) => {
   try {
+
+    utils.fillLastModifiedBy(req);
+
     const user = await UserModel.findById(userId).orFail(Error);
 
     user.isActive = false;
