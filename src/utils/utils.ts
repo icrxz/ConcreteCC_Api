@@ -10,14 +10,3 @@ export const getCurrentUser = async (req: Request) => {
 
     return userId;
 };
-
-export const fillCreatedBy = async (req: Request) => {
-    const userId = getCurrentUser(req);
-    req.body.createdById = userId;
-    req.body.lastModifiedById = userId;
-};
-
-export const fillLastModifiedBy = async (req: Request) => {
-    const userId = getCurrentUser(req);
-    req.body.lastModifiedById = userId;
-};
