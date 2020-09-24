@@ -27,6 +27,10 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  projectUsers: [{
+    type: Schema.Types.ObjectId,
+    ref: "user"
+  }],
   createdById: {
     type: String,
     required: false
