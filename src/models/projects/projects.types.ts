@@ -6,6 +6,7 @@ export interface IProject {
   organization: string;
   description?: string;
   manager: string;
+  files: string[];
   createdAt: Date;
   createdById: string;
   lastModifiedAt: Date;

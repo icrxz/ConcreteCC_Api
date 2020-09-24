@@ -26,7 +26,7 @@ export const changeOrganization = async (req: Request, res: Response, projectId:
   try {
 
     const token = req.headers['auth'] as string;
-    const { userId } = jwt.verify(token) as any;  
+    const { userId } = jwt.verify(token) as any;
 
     const project = await ProjectModel.findById(projectId).orFail(Error);
     const { organization } = req.body;
@@ -67,7 +67,7 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
 
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
-    
+
     const project = await ProjectModel.findById(projectId).orFail(Error);
     project.lastModifiedById = userId;
     project.isActive = false;
@@ -79,7 +79,15 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
   }
 };
 
-export const uploadFile = async (req: Request, resp: Response, projectId: string) => {
-  const createdFile = { ...req.file };
-  console.log(createdFile);
+export const uploadFile = async (req: Request, res: Response, projectId: string) => {
+  try {
+    const createdFile = { ...req.file };
+
+    const project = await ProjectModel.findById(projectId).orFail(Error);
+    const file = await FileModel.create();
+
+    project.files.push()
+  } catch(error) {
+    return res.status(404).json({ error: 'Project not found' })
+  }
 }
