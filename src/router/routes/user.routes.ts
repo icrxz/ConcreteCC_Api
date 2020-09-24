@@ -13,25 +13,19 @@ userRouter.post(
 userRouter.get(
   '/users/',
   authMiddleware,
-  (req, resp) => userController.indexUser(req, resp)
+  (req, resp) => userController.indexUser(resp)
 );
 
 userRouter.get(
   '/users/:userId',
   authMiddleware,
-  (req, resp) => userController.showUser(req, resp, req.params.userId)
+  (req, resp) => userController.showUser(resp, req.params.userId)
 );
 
 userRouter.put(
   '/users/:userId/change-password',
   authMiddleware,
-  (req, resp) => userController.changePassword(req, resp, req.params.userId)
-);
-
-userRouter.delete(
-  '/users/:userId',
-  authMiddleware,
-  (req, resp) => userController.deleteUser(req, resp, req.params.userId)
+  (req, resp) => userController.changePassword(req, resp)
 );
 
 export default userRouter;

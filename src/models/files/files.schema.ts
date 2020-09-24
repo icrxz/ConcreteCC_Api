@@ -4,26 +4,30 @@ import { IFileDocument } from './files.types';
 const FileSchema = new Schema({
   name: {
     type: String,
-    required: true,
-  },
-  isDeleted: {
-    type: Boolean,
-    required: true,
-    default: false,
+    required: true
   },
   fileType: {
     type: String,
-    required: true,
+    required: true
+  },
+  description: {
+    type: String,
+    required: false
   },
   project: {
     type: Schema.Types.ObjectId,
     ref: "project",
+    required: true
   },
-  fileHistory: [{
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+  fileHistories: [{
     type: Schema.Types.ObjectId,
     ref: "history",
   }],
-  description: String,
   createdById: {
     type: Schema.Types.ObjectId,
     ref: "user",

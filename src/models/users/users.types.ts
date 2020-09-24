@@ -3,12 +3,13 @@ import { Document } from "mongoose";
 export interface IUser {
   name: string;
   password: string;
-  email: string;
   role: string;
-  profile: string;
+  email: string;
   phone?: string;
+  profile: string;
   createdAt?: Date;
-  updatedAt?: Date;
+  createdById?: string;
+  lastModifiedAt?: Date;
   lastModifiedById?: string;
 }
 

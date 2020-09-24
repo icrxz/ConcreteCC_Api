@@ -5,7 +5,8 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "dev": "nodemon src/server.ts",
+    "dev:debug": "nodemon --inspect src/server.ts",
     "start": "ts-node src/server.ts",
     "lint": "eslint . --ext .ts --ext .tsx"
   },
