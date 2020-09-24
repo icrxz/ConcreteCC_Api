@@ -45,6 +45,7 @@
     "type": "git",
     "url": "git+https://github.com/icrxz/ConcreteCC_Api.git"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "homepage": "https://github.com/icrxz/ConcreteCC_Api#readme"
