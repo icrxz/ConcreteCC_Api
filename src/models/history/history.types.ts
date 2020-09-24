@@ -1,14 +1,14 @@
+import { integer } from "aws-sdk/clients/cloudfront";
 import { Document } from "mongoose";
 
 export interface IHistory {
-  name: string;
-  password: string;
-  email: string;
-  role: string;
-  profile: string;
-  phone?: string;
+  file: string;
+  externalURL: string;
+  versionNumber: number;
+  isActive: boolean;
   createdAt?: Date;
-  updatedAt?: Date;
+  createdById?: string;
+  lastModifiedAt?: Date;
   lastModifiedById?: string;
 }
 
