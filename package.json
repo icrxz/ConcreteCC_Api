@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "node --max_old_space_size=490 start",
+    "build": "node --max_old_space_size=490 ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
     "dev:debug": "nodemon --inspect src/server.ts",
     "start": "node --max_old_space_size=490  ts-node src/server.ts",
