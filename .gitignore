@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+dist
 
 #database
 data
@@ -9,9 +10,6 @@ data
 # env Vars
 .env
 .env.*.local
-
-# editor configs
-.vscode
 
 npm-debug.log*
 yarn-debug.log*
