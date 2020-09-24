@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 
 import * as jwt from '../utils/jwt';
-import * as utils from '../utils/utils';
 import { OrganizationModel }  from '../models/organizations/organizations.schema';
 
 export const createOrganization = async (req: Request, res: Response) => {
   try {
 
-    utils.fillCreatedBy(req);
+    const token = req.headers['auth'] as string;
+    const { userId } = jwt.verify(token) as any;
 
     const organization = await OrganizationModel.create(req.body);
+
+    organization.createdById = userId;
+    organization.save();
 
     return res.json(organization)
   } catch (error) {
@@ -39,10 +42,12 @@ export const showOrganization = async (req: Request, res: Response, organization
 
 export const deleteOrganization = async (req: Request, res: Response, organizationId: string) => {
   try {
-    utils.fillLastModifiedBy(req);
-    
+    const token = req.headers['auth'] as string;
+    const { userId } = jwt.verify(token) as any;
+
     const organization = await OrganizationModel.findById(organizationId).orFail(Error);
 
+    organization.lastModifiedById = userId;
     organization.isActive = false;
     organization.save();
 
