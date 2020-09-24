@@ -5,15 +5,15 @@ import * as userController from '../../controllers/userController';
 
 const userRouter = express.Router({ mergeParams: true });
 
+userRouter.post(
+  '/users/',
+  (req, resp) => userController.createUser(req, resp)
+);
+
 userRouter.get(
   '/users/',
   authMiddleware,
   (req, resp) => userController.indexUser(req, resp)
-);
-
-userRouter.post(
-  '/users/',
-  (req, resp) => userController.createUser(req, resp)
 );
 
 userRouter.get(
@@ -26,6 +26,12 @@ userRouter.put(
   '/users/:userId/change-password',
   authMiddleware,
   (req, resp) => userController.changePassword(req, resp, req.params.userId)
+);
+
+userRouter.delete(
+  '/users/:userId',
+  authMiddleware,
+  (req, resp) => userController.deleteUser(req, resp, req.params.userId)
 );
 
 export default userRouter;
