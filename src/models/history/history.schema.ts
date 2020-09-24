@@ -2,30 +2,33 @@ import { model, Schema } from "mongoose";
 import { IHistoryDocument } from './history.types';
 
 const HistorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  profile: {
+  file: {
+    type: Schema.Types.ObjectId,
+    ref: "file",
+    required: true
+  },  
+  externalURL: {
     type: String,
     required: true
   },
-  phone: String,
-  role: {
-    type: String,
+  versionNumber: {
+    type: Int16Array,
+    required: true
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
+  createdById: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
     required: true
   },
   lastModifiedById: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "user",
+    required: true
   }
 }, {
   timestamps: true,
