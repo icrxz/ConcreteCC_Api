@@ -59,3 +59,16 @@ export const changePassword = async (req: Request, res: Response, userId: string
     return res.status(404).json({ error: 'User not found' })
   }
 };
+
+export const deleteUser = async (req: Request, res: Response, userId: string) => {
+  try {
+    const user = await UserModel.findById(userId).orFail(Error);
+
+    user.isActive = false;
+    user.save();
+
+    return res.json(user)
+  } catch (error) {
+    return res.status(404).json({ error: 'User not found' })
+  }
+};
