@@ -13,7 +13,7 @@ const HistorySchema = new Schema({
   },
   versionNumber: {
     type: Number,
-    dafault: 0,
+    default: 0,
     required: true
   },
   isActive: {

@@ -16,9 +16,9 @@ export const createOrganization = async (req: Request, res: Response) => {
         lastModifiedById: userId,
       });
 
-    return res.json(organization)
+    return res.status(200).json(organization)
   } catch (error) {
-    return res.status(422).json({ error: 'Registration failed' })
+    return res.status(422).json({ message: error })
   }
 };
 
@@ -26,9 +26,9 @@ export const indexOrganization = async (req: Request, res: Response) => {
   try {
     const organizations = await OrganizationModel.find({ isActive: true });
 
-    return res.json(organizations)
+    return res.status(200).json(organizations)
   } catch (error) {
-    return res.status(400).json({ error: 'Dont have records' })
+    return res.status(400).json({ message: error })
   }
 };
 
@@ -36,9 +36,9 @@ export const showOrganization = async (req: Request, res: Response, organization
   try {
     const organization = await OrganizationModel.findById(organizationId).orFail(Error);
 
-    return res.json(organization)
+    return res.status(200).json(organization)
   } catch (error) {
-    return res.status(404).json({ error: 'Organization not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
@@ -53,8 +53,8 @@ export const deleteOrganization = async (req: Request, res: Response, organizati
     organization.isActive = false;
     organization.save();
 
-    return res.json(organization)
+    return res.status(200).json(organization)
   } catch (error) {
-    return res.status(404).json({ error: 'Organization not found' })
+    return res.status(404).json({ message: error })
   }
 };

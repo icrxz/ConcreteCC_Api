@@ -4,7 +4,6 @@ import { ProjectModel }  from '../models/projects/projects.schema';
 import { OrganizationModel } from '../models/organizations/organizations.schema';
 import { uploadFileService } from '../services/uploadService';
 
-
 import * as jwt from '../utils/jwt';
 
 export const createProject = async (req: Request, res: Response) => {
@@ -18,9 +17,9 @@ export const createProject = async (req: Request, res: Response) => {
         lastModifiedById: userId,
       });
 
-    return res.json(project)
+    return res.status(200).json(project)
   } catch (error) {
-    return res.status(422).json({ teste: error })
+    return res.status(422).json({ message: error })
   }
 };
 
@@ -37,9 +36,9 @@ export const changeOrganization = async (req: Request, res: Response, projectId:
     project.lastModifiedById = userId;
     project.save();
 
-    return res.json(project)
+    return res.status(200).json(project)
   } catch (error) {
-    return res.status(422).json({ error: 'Registration failed' })
+    return res.status(422).json({ message: error })
   }
 };
 
@@ -47,9 +46,9 @@ export const indexProject = async (req: Request, res: Response) => {
   try {
     const projects = await ProjectModel.find({ isActive: true });
 
-    return res.json(projects)
+    return res.status(200).json(projects)
   } catch (error) {
-    return res.status(400).json({ error: 'Dont have records' })
+    return res.status(400).json({ message: error })
   }
 };
 
@@ -57,9 +56,9 @@ export const showProject = async (req: Request, res: Response, projectId: string
   try {
     const project = await ProjectModel.findById(projectId).orFail(Error);
 
-    return res.json(project)
+    return res.status(200).json(project)
   } catch (error) {
-    return res.status(404).json({ error: 'Project not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
@@ -74,9 +73,9 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
     project.isActive = false;
     project.save();
 
-    return res.json(project)
+    return res.status(200).json(project)
   } catch (error) {
-    return res.status(404).json({ error: 'Project not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
@@ -98,7 +97,9 @@ export const uploadFile = async (req: Request, res: Response, projectId: string)
         lastModifiedById: userId,
       },
     )
+
+    res.status(200).json(_file);
   } catch(error) {
-    return res.status(404).json({ error: 'Project not found' })
+    return res.status(404).json({ message: error })
   }
 }
