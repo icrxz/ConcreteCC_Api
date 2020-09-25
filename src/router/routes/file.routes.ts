@@ -1,4 +1,7 @@
 import express from 'express';
+import multer from 'multer';
+
+import * as multerConfig from '../../middlewares/multer';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 
 import * as fileController from '../../controllers/fileController';
@@ -31,6 +34,7 @@ fileRouter.get(
 
 fileRouter.put(
   '/files/:fileId/change',
+  multer(multerConfig).single('file'),
   authMiddleware,
   (req, resp) => fileController.changeFile(req, resp, req.params.fileId)
 );
