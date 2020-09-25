@@ -38,6 +38,7 @@ class App {
       routes.authRouter,
       routes.userRouter,
       routes.projectRouter,
+      routes.fileRouter,
       routes.organizationRouter,
     ]);
   }
