@@ -30,7 +30,7 @@ fileRouter.get(
 );
 
 fileRouter.put(
-  '/files/:fileId',
+  '/files/:fileId/change',
   authMiddleware,
   (req, resp) => fileController.changeFile(req, resp, req.params.fileId)
 );

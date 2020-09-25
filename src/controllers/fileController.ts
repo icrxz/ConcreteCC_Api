@@ -28,7 +28,7 @@ export const showFile = async (req: Request, res: Response, fileId: string) => {
 
 export const showFileHistory = async (req: Request, res: Response, fileId: string) => {
     try {
-        const fileHistory = await HistoryModel.find({ isActive: true, file: fileId });
+        const fileHistory = await HistoryModel.find({file: fileId });
 
         return res.json(fileHistory)
     } catch (error) {
@@ -38,7 +38,7 @@ export const showFileHistory = async (req: Request, res: Response, fileId: strin
 
 export const showFileHistoryActive = async (req: Request, res: Response, fileId: string) => {
     try {
-        const fileHistory = await HistoryModel.find({ isActive: false, file: fileId });
+        const fileHistory = await HistoryModel.find({ isActive: true, file: fileId });
 
         return res.json(fileHistory)
     } catch (error) {
