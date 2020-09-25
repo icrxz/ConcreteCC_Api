@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
 import { ProjectModel }  from '../models/projects/projects.schema';
-import { FileModel }  from '../models/files/files.schema';
 import { OrganizationModel } from '../models/organizations/organizations.schema';
+import { uploadFileService } from '../services/uploadService';
+
 
 import * as jwt from '../utils/jwt';
-import { UserModel } from '../models/users/users.schema';
 
 export const createProject = async (req: Request, res: Response) => {
   try {
@@ -24,15 +24,14 @@ export const createProject = async (req: Request, res: Response) => {
 
 export const changeOrganization = async (req: Request, res: Response, projectId: string) => {
   try {
-
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
 
     const project = await ProjectModel.findById(projectId).orFail(Error);
     const { organization } = req.body;
-    //const organizationRelated = await OrganizationModel.findById(organization).orFail(Error);
+    const organizationRelated = await OrganizationModel.findById(organization).orFail(Error);
 
-    project.name = organization;
+    project.organization = organizationRelated.id;
     project.lastModifiedById = userId;
     project.save();
 
@@ -81,12 +80,22 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
 
 export const uploadFile = async (req: Request, res: Response, projectId: string) => {
   try {
-    const createdFile = { ...req.file };
+    const uploadedFile = {
+      ...req.file,
+      desc: req.body.desc as string
+    };
+    const token = req.headers['auth'] as string;
+    const { userId } = jwt.verify(token) as any;
 
-    const project = await ProjectModel.findById(projectId).orFail(Error);
-    const file = await FileModel.create();
+    const _file = await uploadFileService(userId, projectId, uploadedFile);
 
-    project.files.push()
+    ProjectModel.findByIdAndUpdate(
+      projectId,
+      {
+        $push: { files: _file.id },
+        lastModifiedById: userId,
+      },
+    )
   } catch(error) {
     return res.status(404).json({ error: 'Project not found' })
   }
