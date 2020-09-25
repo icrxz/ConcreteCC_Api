@@ -91,6 +91,16 @@ export const showFileProject = async (req: Request, res: Response, projectId: st
   }
 };
 
+export const listMembers = async (req: Request, res: Response, projectId: string) => {
+  try {
+    const files = await ProjectUserModel.find({ project: projectId });
+
+    return res.json(files)
+  } catch (error) {
+    return res.status(404).json({ message: error })
+  }
+};
+
 export const addMember = async (req: Request, res: Response, projectId: string) => {
   try {
     const token = req.headers['auth'] as string;

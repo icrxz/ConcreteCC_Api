@@ -34,9 +34,9 @@ projectRouter.get(
 );
 
 projectRouter.get(
-  '/projects/:projectId/all-files',
+  '/projects/:projectId/all-files',  
   authMiddleware,
-  (req, resp) => projectController.showProject(req, resp, req.params.projectId)
+  (req, resp) => projectController.showFileProject(req, resp, req.params.projectId)
 );
 
 projectRouter.delete(
@@ -62,6 +62,12 @@ projectRouter.delete(
   '/projects/:projectId/remove-member/:userId',
   authMiddleware,
   (req, resp) => projectController.removeMember(req, resp, req.params.projectId, req.params.userId)
+);
+
+projectRouter.get(
+  '/projects/:projectId/list-members',
+  authMiddleware,
+  (req, resp) => projectController.listMembers(req, resp, req.params.projectId)
 );
 
 export default projectRouter;
