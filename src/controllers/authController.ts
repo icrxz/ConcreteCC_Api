@@ -14,23 +14,26 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       const token = jwt.sign({ userId: user.id, email: user.email });
 
       res.setHeader("token", token);
-      res.json({ message: 'Authenticated'});
+      res.status(200).json({
+        message: 'Authenticated',
+        token: token,
+      });
     } else {
       throw "Access Unauthorized";
     }
 
   } catch (error) {
     console.log(error);
-    res.status(401).json({ message: error as string });
+    res.status(401).json({ message: error });
   }
 };
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.setHeader('token', '');
-    res.json({ message: 'Logged Out'});
+    res.status(200).json({ message: 'Logged Out'});
   } catch (error) {
     console.log(error);
-    res.status(401).json({ message: error as string });
+    res.status(401).json({ message: error });
   }
 };

@@ -4,8 +4,9 @@ import { HistoryModel } from '../models/history/history.schema';
 import { IHistory } from '../models/history/history.types';
 
 export const uploadFileService = async (userId: string, projectId: string, file: any) => {
+  console.log(file);
   const createdFile = await FileModel.create({
-    name: file.filename,
+    name: file.originalname,
     fileType: file.mimetype,
     description: file.desc,
     project: projectId,
@@ -39,16 +40,20 @@ export const changeUploadedFileService = async (userId: string, fileId: string, 
   ).orFail(Error);
 
   const lastfileHistoryId = changedFile.fileHistories[-1];
-  HistoryModel.findByIdAndUpdate(
+  let version = 0;
+  await HistoryModel.findByIdAndUpdate(
     lastfileHistoryId,
     { isActive: false }
-  );
+  ).then(_hist => {
+    version = _hist!.versionNumber + 1;
+  });
 
   const createdHistory = await HistoryModel.create({
     externalURL: file.location,
     lastModifiedById: userId,
     createdById: userId,
     file: changedFile.id,
+    versionNumber: version,
   } as IHistory);
 
   await FileModel.findByIdAndUpdate(

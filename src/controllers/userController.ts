@@ -11,9 +11,9 @@ export const createUser = async (req: Request, res: Response) => {
 
     const user = await UserModel.create(req.body);
 
-    return res.json(user)
+    return res.status(200).json(user)
   } catch (error) {
-    return res.status(422).json({ error: 'Registration failed' })
+    return res.status(422).json({ message: error })
   }
 };
 
@@ -21,9 +21,9 @@ export const indexUser = async (res: Response) => {
   try {
     const users = await UserModel.find();
 
-    return res.json(users)
+    return res.status(200).json(users)
   } catch (error) {
-    return res.status(400).json({ error: 'Dont have records' })
+    return res.status(400).json({ message: error })
   }
 };
 
@@ -31,9 +31,9 @@ export const showUser = async (res: Response, userId: string) => {
   try {
     const user = await UserModel.findById(userId).orFail(Error);
 
-    return res.json(user)
+    return res.status(200).json(user)
   } catch (error) {
-    return res.status(404).json({ error: 'User not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
@@ -55,8 +55,8 @@ export const changePassword = async (req: Request, res: Response) => {
         user.save();
     }
 
-    return res.json(user)
+    return res.status(200).json(user)
   } catch (error) {
-    return res.status(404).json({ error: 'User not found' })
+    return res.status(404).json({ message: error })
   }
 };
