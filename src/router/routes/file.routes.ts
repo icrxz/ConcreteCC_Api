@@ -30,9 +30,15 @@ fileRouter.get(
 );
 
 fileRouter.put(
-  '/files/:fileId/change',
+  '/files/:fileId',
   authMiddleware,
   (req, resp) => fileController.changeFile(req, resp, req.params.fileId)
+);
+
+fileRouter.delete(
+  '/files/:fileId',
+  authMiddleware,
+  (req, resp) => fileController.deleteFile(req, resp, req.params.fileId)
 );
 
 export default fileRouter;

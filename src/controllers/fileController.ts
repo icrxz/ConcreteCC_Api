@@ -46,6 +46,30 @@ export const showFileHistoryActive = async (req: Request, res: Response, fileId:
     }
 };
 
+export const deleteFile = async (req: Request, res: Response, fileId: string) => {
+    try {
+        const token = req.headers['auth'] as string;
+        const { userId } = jwt.verify(token) as any;
+
+        const fileConst = await FileModel.findById(fileId).orFail(Error);
+
+        fileConst.lastModifiedById = userId;
+        fileConst.isActive = false;
+        fileConst.save();
+
+        const lastfileHistoryId = fileConst.fileHistories[-1];
+        await HistoryModel.findByIdAndUpdate(
+            lastfileHistoryId,
+            { isActive: false, lastModifiedById:  userId }
+        )
+
+        return res.json(fileConst)
+    } catch (error) {
+        return res.status(404).json({ error: 'File History not found' })
+    }
+};
+
+
 export const changeFile = async (req: Request, res: Response, fileId: string) => {
     try {
         const uploadedFile = {
