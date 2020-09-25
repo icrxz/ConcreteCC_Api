@@ -39,7 +39,7 @@ export const changeUploadedFileService = async (userId: string, fileId: string, 
     }
   ).orFail(Error);
 
-  const lastfileHistoryId = changedFile.fileHistories[1];
+  const lastfileHistoryId = changedFile.fileHistories[0];
   let version = 0;
   await HistoryModel.findByIdAndUpdate(
     lastfileHistoryId,
