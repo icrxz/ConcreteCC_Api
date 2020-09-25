@@ -43,7 +43,9 @@ export const changeUploadedFileService = async (userId: string, fileId: string, 
   let version = 0;
   await HistoryModel.findByIdAndUpdate(
     lastfileHistoryId,
-    { isActive: false }
+    {
+      isActive: false,
+      lastModifiedById: userId, }
   ).then(_hist => {
     version = _hist!.versionNumber + 1;
   });
