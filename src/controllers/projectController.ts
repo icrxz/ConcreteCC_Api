@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
-import { ProjectModel }  from '../models/projects/projects.schema';
+import { ProjectModel } from '../models/projects/projects.schema';
+import { FileModel } from '../models/files/files.schema';
 import { OrganizationModel } from '../models/organizations/organizations.schema';
 import { uploadFileService } from '../services/uploadService';
 
@@ -75,6 +76,16 @@ export const deleteProject = async (req: Request, res: Response, projectId: stri
     return res.json(project)
   } catch (error) {
     return res.status(404).json({ error: 'Project not found' })
+  }
+};
+
+export const showFileProject = async (req: Request, res: Response, projectId: string) => {
+  try {
+    const files = await FileModel.find({ isActive: true, project: projectId });
+
+    return res.json(files)
+  } catch (error) {
+    return res.status(404).json({ error: 'File not found' })
   }
 };
 

@@ -32,7 +32,7 @@ export const changeUploadedFileService = async (userId: string, fileId: string, 
   const changedFile = await FileModel.findByIdAndUpdate(
     fileId,
     {
-      name: file.filename,
+      name: file.originalname,
       description: file.desc,
       lastModifiedById: userId,
     }

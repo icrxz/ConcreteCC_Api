@@ -33,6 +33,12 @@ projectRouter.get(
   (req, resp) => projectController.showProject(req, resp, req.params.projectId)
 );
 
+projectRouter.get(
+  '/projects/:projectId/all-files',
+  authMiddleware,
+  (req, resp) => projectController.showProject(req, resp, req.params.projectId)
+);
+
 projectRouter.delete(
   '/projects/:projectId',
   authMiddleware,
