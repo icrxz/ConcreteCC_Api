@@ -51,13 +51,15 @@ export const deleteFile = async (req: Request, res: Response, fileId: string) =>
         const token = req.headers['auth'] as string;
         const { userId } = jwt.verify(token) as any;
 
-        const fileConst = await FileModel.findById(fileId).orFail(Error);
+        const fileConst = await FileModel.findByIdAndUpdate(
+            fileId,
+            {
+                isActive : false,
+                lastModifiedById: userId,
+            },
+        ).orFail(Error);
 
-        fileConst.lastModifiedById = userId;
-        fileConst.isActive = false;
-        fileConst.save();
-
-        const lastfileHistoryId = fileConst.fileHistories[-1];
+        const lastfileHistoryId = fileConst.fileHistories.reverse()[0];
         await HistoryModel.findByIdAndUpdate(
             lastfileHistoryId,
             { isActive: false, lastModifiedById:  userId }
