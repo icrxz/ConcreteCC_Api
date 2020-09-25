@@ -9,10 +9,12 @@ export const createOrganization = async (req: Request, res: Response) => {
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
 
-    const organization = await OrganizationModel.create(req.body);
-
-    organization.createdById = userId;
-    organization.save();
+    const organization = await OrganizationModel.create(
+      {
+        ...req.body,
+        createdById: userId,
+        lastModifiedById: userId,
+      });
 
     return res.json(organization)
   } catch (error) {

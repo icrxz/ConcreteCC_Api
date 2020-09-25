@@ -11,10 +11,12 @@ export const createProject = async (req: Request, res: Response) => {
   try {
     const token = req.headers['auth'] as string;
     const { userId } = jwt.verify(token) as any;
-    const project = await ProjectModel.create(req.body);
-
-    project.createdById = userId;
-    project.save();
+    const project = await ProjectModel.create(
+      {
+        ...req.body,
+        createdById: userId,
+        lastModifiedById: userId,
+      });
 
     return res.json(project)
   } catch (error) {
