@@ -65,7 +65,8 @@ export const deleteFile = async (req: Request, res: Response, fileId: string) =>
             { isActive: false, lastModifiedById:  userId }
         )
 
-        return res.json(fileConst)
+        const file = await FileModel.findById(fileId).orFail(Error);
+        return res.json(file)
     } catch (error) {
         return res.status(404).json({ error: 'File History not found' })
     }
