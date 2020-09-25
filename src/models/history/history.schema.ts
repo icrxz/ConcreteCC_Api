@@ -6,13 +6,14 @@ const HistorySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "file",
     required: true
-  },  
+  },
   externalURL: {
     type: String,
     required: true
   },
   versionNumber: {
-    type: Int16Array,
+    type: Number,
+    dafault: 0,
     required: true
   },
   isActive: {
