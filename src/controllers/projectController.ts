@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { ProjectModel } from '../models/projects/projects.schema';
+import { ProjectUserModel } from '../models/projectuser/projectusers.schema';
 import { FileModel } from '../models/files/files.schema';
 import { OrganizationModel } from '../models/organizations/organizations.schema';
 import { uploadFileService } from '../services/uploadService';
@@ -85,6 +86,42 @@ export const showFileProject = async (req: Request, res: Response, projectId: st
     const files = await FileModel.find({ isActive: true, project: projectId });
 
     return res.json(files)
+  } catch (error) {
+    return res.status(404).json({ error: 'File not found' })
+  }
+};
+
+export const addMember = async (req: Request, res: Response, projectId: string) => {
+  try {
+    const token = req.headers['auth'] as string;
+    const { userId } = jwt.verify(token) as any;
+
+    const { userRelatedId, name } = req.body;
+
+
+    const project = await ProjectUserModel.create(
+      {
+        name: name,
+        user: userRelatedId,
+        project: projectId,
+        createdById: userId,
+        lastModifiedById: userId,
+      });
+
+    return res.status(200).json(project)
+  } catch (error) {
+    return res.status(404).json({ error: 'File not found' })
+  }
+};
+
+export const removeMember = async (req: Request, res: Response, projectId: string, userId: string) => {
+  try {
+
+    const projectUser = await ProjectUserModel.find({ project: projectId, user : userId });
+
+    const files = await ProjectUserModel.findByIdAndDelete(projectUser.id);
+
+    return res.status(404).json({message: 'Registro deletado com Sucesso'})
   } catch (error) {
     return res.status(404).json({ error: 'File not found' })
   }

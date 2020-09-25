@@ -3,16 +3,18 @@ import { IProjectUserDocument } from './projectusers.types';
 
 const ProjectUserSchema = new Schema({
     name: {
-        type: Int16Array,
+        type: String,
         required: true
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "user"
+        ref: "user",
+        required: true
     },
     project: {
         type: Schema.Types.ObjectId,
-        ref: "project"
+        ref: "project",
+        required: true
     },
     createdById: {
         type: Schema.Types.ObjectId,

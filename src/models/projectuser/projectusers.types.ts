@@ -1,10 +1,9 @@
 import { Document } from "mongoose";
 
 export interface IProjectUser {
-    name: number;
+    name: string;
     user: string;
     project: string;
-    isActive: boolean;
     createdAt?: Date;
     createdById?: string;
     lastModifiedAt?: Date;

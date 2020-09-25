@@ -52,4 +52,16 @@ projectRouter.post(
   (req, resp) => projectController.uploadFile(req, resp, req.params.projectId)
 );
 
+projectRouter.post(
+  '/projects/:projectId/add-member',
+  authMiddleware,
+  (req, resp) => projectController.addMember(req, resp, req.params.projectId)
+);
+
+projectRouter.delete(
+  '/projects/:projectId/remove-member/:userId',
+  authMiddleware,
+  (req, resp) => projectController.removeMember(req, resp, req.params.projectId, req.params.userId)
+);
+
 export default projectRouter;
