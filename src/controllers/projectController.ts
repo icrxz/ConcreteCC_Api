@@ -87,7 +87,7 @@ export const showFileProject = async (req: Request, res: Response, projectId: st
 
     return res.json(files)
   } catch (error) {
-    return res.status(404).json({ error: 'File not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
@@ -110,20 +110,20 @@ export const addMember = async (req: Request, res: Response, projectId: string) 
 
     return res.status(200).json(project)
   } catch (error) {
-    return res.status(404).json({ error: 'File not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
 export const removeMember = async (req: Request, res: Response, projectId: string, userId: string) => {
   try {
 
-    const projectUser = await ProjectUserModel.find({ project: projectId, user : userId });
+    const projectUser = await ProjectUserModel.findOne({ project: projectId, user : userId }).orFail(Error);
 
     const files = await ProjectUserModel.findByIdAndDelete(projectUser.id);
 
-    return res.status(404).json({message: 'Registro deletado com Sucesso'})
+    return res.status(200).json({message: 'Registro deletado com Sucesso'})
   } catch (error) {
-    return res.status(404).json({ error: 'File not found' })
+    return res.status(404).json({ message: error })
   }
 };
 
