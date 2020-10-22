@@ -13,7 +13,7 @@ authRouter.get('/test', authMiddleware,(request, response) => {
   return response.json({ message: 'Route Authenticated!'});
 })
 
-authRouter.get(
+authRouter.post(
   '/login',
   (req, resp, next) => authController.login(req, resp, next)
 );
