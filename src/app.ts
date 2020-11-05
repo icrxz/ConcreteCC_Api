@@ -20,13 +20,7 @@ class App {
   }
 
   private middlewares() {
-    this.express.use((req, res, next) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Methods", 'GET,PUT,PATCH,POST,DELETE');
-
-      this.express.use(cors());
-      next();
-    });
+    this.express.use(cors());
     this.express.use(express.json());
 
     this.express.use(bodyParser.json())
