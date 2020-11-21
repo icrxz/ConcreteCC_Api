@@ -15,6 +15,7 @@ export const createProject = async (req: Request, res: Response) => {
     const project = await ProjectModel.create(
       {
         ...req.body,
+        manager: userId,
         createdById: userId,
         lastModifiedById: userId,
       });
