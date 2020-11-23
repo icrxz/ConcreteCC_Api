@@ -8,10 +8,16 @@
     "dev": "nodemon src/server.ts",
     "dev:debug": "nodemon --inspect src/server.ts",
     "start": "ts-node src/server.ts --optimize_for_size --max_old_space_size=460",
-    "lint": "eslint . --ext .ts --ext .tsx"
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "test": "jest --detectOpenHandles"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/supertest": "^2.0.10",
     "eslint": "^7.9.0",
+    "jest": "^26.6.3",
+    "supertest": "^6.0.1",
+    "ts-jest": "^26.4.4",
     "ts-node-dev": "^1.0.0-pre.62"
   },
   "dependencies": {
